@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://github.com/frappe/erpnext",
+    "branch": "version-16"
+  },
+  {
+    "url": "https://github.com/frappe/hrms",
+    "branch": "version-16"
+  },
+  {
+    "url": "https://github.com/frappe/helpdesk",
+    "branch": "main"
+  },
+  {
+    "url": "https://github.com/frappe/payments",
+    "branch": "version-16"
+  },
+  {
+    "url": "https://github.com/developmentforpeople/dfp_external_storage",
+    "branch": "develop"
+  },
+  {
+    "url": "https://github.com/frappe/crm",
+    "branch": "main"
+  },
+  {
+    "url": "https://github.com/shridarpatil/frappe_whatsapp",
+    "branch": "master"
+  },
+  {
+    "url": "https://github.com/prilk-consulting/edocument",
+    "branch": "version-16"
+  },
+  {
+    "url": "https://github.com/prilk-consulting/edocument_integration",
+    "branch": "version-16"
+  }
+]

@@ -115,6 +115,9 @@ RUN apt-get update \
     cron \
     # For pandas
     gcc \
+    libxml2-dev \
+    libxslt-dev \
+    zlib1g-dev \
     build-essential \
     libbz2-dev \
     && rm -rf /var/lib/apt/lists/*
