@@ -1,8 +1,10 @@
 name: Core / Build Stable
 
 permissions:
+  actions: read
   contents: read
   packages: write
+  security-events: write
 
 on:
   workflow_call:
@@ -20,6 +22,10 @@ on:
       - .github/workflows/core-build-stable.yml
       - .github/workflows/core-build-test-images.yml
       - .github/workflows/core-publish-images.yml
+      - .github/scripts/image_sizes.py
+      - .github/scripts/test_image_sizes.py
+      - .github/scripts/get_latest_tags.py
+      - .github/image-size-policy.json
 
   push:
     branches:
@@ -34,6 +40,10 @@ on:
       - .github/workflows/core-build-stable.yml
       - .github/workflows/core-build-test-images.yml
       - .github/workflows/core-publish-images.yml
+      - .github/scripts/image_sizes.py
+      - .github/scripts/test_image_sizes.py
+      - .github/scripts/get_latest_tags.py
+      - .github/image-size-policy.json
 
   # Triggered from frappe/frappe and frappe/erpnext on releases
   repository_dispatch:
@@ -46,8 +56,9 @@ jobs:
     with:
       repo: erpnext
       version: "15"
-      python_version: 3.11.6
-      node_version: 20.19.2
+      python_version: "3.11"
+      node_version: "22"
+      debian_base: "bookworm"
 
   v15_publish:
     if: ${{ github.repository == 'frappe/frappe_docker' && github.event_name != 'pull_request' }}
@@ -57,8 +68,9 @@ jobs:
       repo: erpnext
       frappe_version: ${{ needs.v15_test.outputs.frappe_version }}
       erpnext_version: ${{ needs.v15_test.outputs.erpnext_version }}
-      python_version: 3.11.6
-      node_version: 20.19.2
+      python_version: "3.11"
+      node_version: "22"
+      debian_base: "bookworm"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -68,8 +80,8 @@ jobs:
     with:
       repo: erpnext
       version: "16"
-      python_version: 3.14.2
-      node_version: 24.12.0
+      python_version: "3.14"
+      node_version: "24"
   v16_publish:
     if: ${{ github.repository == 'frappe/frappe_docker' && github.event_name != 'pull_request' }}
     needs: v16_test
@@ -78,8 +90,8 @@ jobs:
       repo: erpnext
       frappe_version: ${{ needs.v16_test.outputs.frappe_version }}
       erpnext_version: ${{ needs.v16_test.outputs.erpnext_version }}
-      python_version: 3.14.2
-      node_version: 24.12.0
+      python_version: "3.14"
+      node_version: "24"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -97,9 +109,9 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: "3.14.2"
+          python-version: "3.14"
 
       - name: Get latest versions
         run: python3 ./.github/scripts/get_latest_tags.py --repo erpnext --version 16
